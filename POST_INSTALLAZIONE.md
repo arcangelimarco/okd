@@ -133,3 +133,123 @@ oc create -f fluent-bit-ds.yaml
 Accedere a kibana usando l'indirizzo elasticsearch-service-http configurato precedentemente nel daemon set.  
 Ricordarsi di inserire tale indirizzo nel file hosts del PC locale.  
 L'utente è "elastic" e la password è la stessa che è stata configurata precedentemente nel daemon set.  
+
+
+## Migrazione del monitoraggio negli infra nodes
+
+Utilizziamo una ConfigMap per impostare una regola di selezione che verrà applicata dallo scheduler e poi applichiamo il file.  
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+data:
+  config.yaml: |+
+    alertmanagerMain:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+    prometheusK8s:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+    prometheusOperator:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+    grafana:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+    k8sPrometheusAdapter:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+    kubeStateMetrics:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+    telemeterClient:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+    openshiftStateMetrics:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+```
+
+```
+oc apply -f monitoring-infra.yaml
+```
+
+## Authentication integration con Active Directory / LDAP
+Fonte: https://docs.openshift.com/container-platform/4.3/authentication/identity_providers/configuring-ldap-identity-provider.html  
+
+### Salvataggio delle credenziali in un secret
+```
+oc create secret generic ldap-secret --from-literal=bindPassword=<password> -n openshift-config
+```
+
+### Configurazione dell'identity provider
+```
+oc edit oauth cluster
+```
+Aggiunta in fondo della sezione sotto riportata:  
+```
+spec:
+  identityProviders:
+  - ldap:
+      attributes:
+        email:
+        - mail
+        id:
+        - sAMAccountName
+        name:
+        - cn
+        preferredUsername:
+        - sAMAccountName
+      bindDN: "CN=XXXXX,OU=XXXXX,DC=XXXXX,DC=local"
+      bindPassword:
+        name: ldap-secret
+      insecure: true
+      url: ldap://dc.XXXXX.local:389/dc=XXXXX,dc=local?sAMAccountName?sub?(objectClass=person)
+    mappingMethod: claim
+    name: XXXXXXX
+    type: LDAP
+```
+
+### Sincronizzazione dei gruppi AD / LDAP
+
+Sincronizzazione dei gruppi AD / LDAP con la creazione di una whitelist che chiameremo WhiteListGroup.txt contente solo i gruppi che si intende abilitare nell'infrastruttura.  
+```
+CN=<Gruppo-da-abilitare>,OU=XXXXX,DC=XXXXX,DC=local
+```
+Agli utenti associati al gruppo saranno concessi i priviligi di cluster-admin al cluster okd.  
+
+A questo punto eseguiamo la sincronizzazione dei gruppi AD:  
+```
+oc adm groups sync --whitelist=WhiteListGroup.txt --sync-config=Ldap-sync-group.yaml --confirm
+```
+
+E assegnamo il ruolo cluster-admin al gruppo "Gruppo-da-abilitare":  
+```
+oc adm policy add-cluster-role-to-group cluster-admin "<Gruppo-da-abilitare>"
+```
+
+## Configurazione statica degli IP dei master nodes
+
+Per staticizzare gli IP dei master è sufficiente collegarsi in ssh e creare il file:  
+```
+/etc/sysconfig/network-scripts/ifcfg-my-net-config-file
+```
+
+```
+DEVICE=ensXXX
+TYPE=Ethernet
+BOOTPROTO=none
+IPADDR=XXX.XXX.XXX.XXX
+PREFIX=XX
+DNS1=XXX.XXX.XXX.XXX
+NAME="Wired connection 1"
+ONBOOT=yes
+GATEWAY=XXX.XXX.XXX.XXX
+```
+
+Dopo questa operazione su ogni master node si possono riavviare uno alla volta.  
+
+### Nota Bene
+Oltre a staticizzare gli IP dei master è necessario richiedere la reservation per gli tutti gli IP allocati. In questo modo si evita che l'IP possa essere riassegnato dal DHCP.  
