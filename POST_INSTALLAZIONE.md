@@ -137,7 +137,7 @@ L'utente è "elastic" e la password è la stessa che è stata configurata preced
 
 ## Migrazione del monitoraggio negli infra nodes
 
-Utilizziamo una ConfigMap per impostare una regola di selezione che verrà applicata dallo scheduler e poi applichiamo il file.  
+Utilizziamo una ConfigMap per impostare una regola di selezione che verrà applicata dallo scheduler e poi applichiamo il file:  
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -214,18 +214,18 @@ spec:
 
 ### Sincronizzazione dei gruppi AD / LDAP
 
-Sincronizzazione dei gruppi AD / LDAP con la creazione di una whitelist che chiameremo WhiteListGroup.txt contente solo i gruppi che si intende abilitare nell'infrastruttura.  
+Creazione di una whitelist che chiameremo WhiteListGroup.txt contente solo i gruppi che si intende abilitare nell'infrastruttura.  
 ```
 CN=<Gruppo-da-abilitare>,OU=XXXXX,DC=XXXXX,DC=local
 ```
 Agli utenti associati al gruppo saranno concessi i priviligi di cluster-admin al cluster okd.  
 
-A questo punto eseguiamo la sincronizzazione dei gruppi AD:  
+Sincronizzazione dei gruppi AD:  
 ```
 oc adm groups sync --whitelist=WhiteListGroup.txt --sync-config=Ldap-sync-group.yaml --confirm
 ```
 
-E assegnamo il ruolo cluster-admin al gruppo "Gruppo-da-abilitare":  
+E assegnazione del ruolo cluster-admin al gruppo "Gruppo-da-abilitare":  
 ```
 oc adm policy add-cluster-role-to-group cluster-admin "<Gruppo-da-abilitare>"
 ```
