@@ -1,0 +1,39 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch-logging
+  namespace: okd-logging
+spec:
+  version: 7.8.1
+  nodeSets:
+    - name: default
+      config:
+        node.master: true
+        node.data: true
+        node.ingest: true
+        node.attr.attr_name: attr_value
+        node.store.allow_mmap: false
+      podTemplate:
+        spec:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 12Gi
+                  cpu: 2
+                limits:
+                  memory: 12Gi
+                  cpu: 2
+      count: 1
+      volumeClaimTemplates:
+      - metadata:
+          name: elasticsearch-data
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1000Gi
+          storageClassName: thin

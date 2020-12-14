@@ -1,0 +1,28 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana-logging
+  namespace: okd-logging
+spec:
+  version: 7.8.1
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch-logging
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  podTemplate:
+    metadata:
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+      containers:
+        - name: kibana
+          resources:
+             requests:
+               memory: 2Gi
+               cpu: 1
+             limits:
+               memory: 2Gi
+               cpu: 2
