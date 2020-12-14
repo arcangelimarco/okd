@@ -63,3 +63,7 @@ cp ~/okd-cluster-dir/auth/kubeconfig ~/okd-cluster-dir/.kube/config
 ```
 oc get nodes
 ```
+
+### IMPORTANTE
+All'interno della directory indicata "~/okd-cluster-dir" è presente anche la directory "auth" che contiene il file con la password dell'utente kubeadmin.
+Tale file è consigliabile da tenere in un luogo sicuro (e magari farne anche un backup) perché queste credenziali bypassano tutta la componente di autenticazione oauth e possono essere usate come credenziali per accedere con permessi amministrativi al cluster okd.  
