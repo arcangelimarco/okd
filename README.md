@@ -17,3 +17,5 @@ La documentazione è composta da tre documenti:
 - il primo "PREREQUISITI" dove sono elencati i prerequisiti e le configurazioni necessarie,  
 - il secondo "INSTALLAZIONE" dove sono elencati i passi per installare il cluster OKD,  
 - il terzo "POST_INSTALLAZIONE" dove sono elencati i passi post installazione.  
+
+Tutti i file descritti sono stati aggiunti in questo repository.  
