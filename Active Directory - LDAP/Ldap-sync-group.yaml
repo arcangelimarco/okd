@@ -1,0 +1,22 @@
+kind: LDAPSyncConfig
+apiVersion: v1
+url: "ldap://<ldap_server_ip>:389"
+insecure: true
+bindDN: cn=XXXXX,ou=XXXXX,dc=XXXXX,dc=local
+bindPassword: "<password>"
+augmentedActiveDirectory:
+  groupsQuery:
+    baseDN: dc=XXXXX,dc=local
+    scope: "sub"
+    derefAliases: "never"
+    pageSize: 1000
+  groupUIDAttribute: "dn"
+  groupNameAttributes: ["cn"]
+  usersQuery:
+    baseDN: dc=XXXXX,dc=local
+    scope: "sub"
+    derefAliases: "never"
+    pageSize: 1000
+    filter: "(objectclass=person)"
+  userNameAttributes: ["sAMAccountName"]
+  groupMembershipAttributes: ["memberOf"]
