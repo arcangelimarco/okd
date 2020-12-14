@@ -48,3 +48,13 @@ Dal bastion connettersi alla VM bootstrap con l'utenza "core":
 ssh -l core <IP-VM-bootstrap>
 ```
 Dare il comando journactl come mostrato nel banner della VM-bootstrap per un controllo dell'avanzamento dell'installazione.
+
+## Copia del kubeconfig file e controllo
+```
+mkdir ~/okd-cluster-dir/.kube
+cp ~/okd-cluster-dir/auth/kubeconfig ~/okd-cluster-dir/.kube/config
+```
+
+```
+oc get nodes
+```
