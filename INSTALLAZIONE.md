@@ -42,8 +42,13 @@ La parte di compilazione non verrà più chiesta, in quanto già effettuata dal 
 openshift-install create cluster --dir=~/okd-cluster --log-level=info
 ```
 
-## Controllo dell'installazione
-Dal bastion connettersi alla VM bootstrap con l'utenza "core":  
+## Controllo dell'avanzamento dell'installazione
+Controllo dei cluster operators, aspettare che siano tutti in "READY":  
+```
+oc get clusteroperators
+```
+
+In aggiunta si può connettersi dal bastion alla VM bootstrap con l'utenza "core":  
 ```
 ssh -l core <IP-VM-bootstrap>
 ```
