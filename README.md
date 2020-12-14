@@ -2,7 +2,7 @@
 
 ## Installazione OKD Cluster 4.5
 
-Installazine di un cluster okd versione 4.5.0 in un user-provisioned environment.  
+Installazione di un cluster okd versione 4.5.0 in un user-provisioned environment.  
 
 1. Definizione dei prerequisiti necessari.  
 2. Installazione della piattaforma okd in un ambiente di test cliente.  
