@@ -7,7 +7,7 @@ Installazine di un cluster okd versione 4.5.0 in un user-provisioned environment
 1. Definizione dei prerequisiti necessari.  
 2. Installazione della piattaforma okd in un ambiente di test cliente.  
 3. Configurazioni post installazione:  
-	 - definizine degli infrastructure nodes,  
+   - definizione degli infrastructure nodes,  
    - logging centralizzato con Elasticsearch e Kibana,  
    - authentication integration con Active Directory / LDAP,  
    - configurazine statica degli IP dei master nodes.  
