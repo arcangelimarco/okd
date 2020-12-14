@@ -62,6 +62,6 @@ https://cloud.redhat.com/openshift/install/pull-secret
 
 ## Dati per autenticazione LDAP  
 - IP:porta server LDAP,  
-- base domain server LDAP (DC=XX),  
+- base domain server LDAP (DC=XX,DC=local),  
 - utenza/password da utilizzare per la bind,  
-- gruppi AD da autorizzare all'accesso (CN=XX,OU=XX,DC=XX).  
+- gruppi AD da autorizzare all'accesso (CN=XX,OU=XX,DC=XX,DC=local).  
