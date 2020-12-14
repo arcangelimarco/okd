@@ -5,7 +5,7 @@ Per una completa panoramica fare riferimento alla risorsa sotto riportata:
 https://docs.okd.io/latest/installing/installing_vsphere/installing-vsphere.html#prerequisites  
 
 ## Requisiti VMware vSphere
-VMware vSphere versione 6 o 7
+VMware vSphere versione 6 o 7.
 
 ## Required machines
 Il cluster OKD minimo è composto da:
