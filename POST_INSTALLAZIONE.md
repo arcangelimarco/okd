@@ -80,17 +80,17 @@ oc edit cm fluent-bit-config
 ```
 output-elasticsearch.conf: | 
   [OUTPUT]
-    Name            es
-		Match           *
-		Host            ${FLUENT_ELASTICSEARCH_HOST}
-		Port            ${FLUENT_ELASTICSEARCH_PORT}
-		HTTP_User       ${FLUENT_ELASTICSEARCH_USER}
-		HTTP_Passwd     ${FLUENT_ELASTICSEARCH_PASSWD}
-		Logstash_Format On
-		Replace_Dots    On
-		Retry_Limit     False
-		tls             On
-		tls.verify      Off
+    Name             es
+    Match            *
+    Host             ${FLUENT_ELASTICSEARCH_HOST}
+    Port             ${FLUENT_ELASTICSEARCH_PORT}
+    HTTP_User        ${FLUENT_ELASTICSEARCH_USER}
+    HTTP_Passwd      ${FLUENT_ELASTICSEARCH_PASSWD}
+    Logstash_Format  On
+    Replace_Dots     On
+    Retry_Limit      False
+    tls              On
+    tls.verify       Off
 ```
 
 Scaricare la definizione del DaemonSet:  
