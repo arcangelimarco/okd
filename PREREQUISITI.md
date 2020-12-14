@@ -53,6 +53,7 @@ unzip download.zip
 cp certs/lin/* /etc/pki/ca-trust/source/anchors
 update-ca-trust extract
 ```
+Fonte: https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html-single/installing_on_vsphere/index#installation-adding-vcenter-root-certificates_installing-vsphere-installer-provisioned-customizations  
 
 ## Pull-secret  
 Link di accesso al sito Red Hat per il download del pull-secret:  
