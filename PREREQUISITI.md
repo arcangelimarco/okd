@@ -1,6 +1,6 @@
 # PREREQUISITI
 
-Sotto si riportano i prerequisiti che sono stati necessari per l'ambiente cliente.
+Sotto si riportano i prerequisiti che sono stati necessari per l'ambiente cliente.  
 Per una completa panoramica fare riferimento alla risorsa sotto riportata:  
 https://docs.okd.io/latest/installing/installing_vsphere/installing-vsphere.html#prerequisites  
 
