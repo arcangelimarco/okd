@@ -10,8 +10,8 @@ Installazione di un cluster okd versione 4.5.0 in un user-provisioned environmen
    - definizione degli infrastructure nodes,  
    - logging centralizzato con Elasticsearch e Kibana,  
    - authentication integration con Active Directory / LDAP,  
-   - configurazine statica degli IP dei master nodes.  
-4. Supporto al cliente per le prime settimane dall'installazione.  
+   - configurazione statica degli IP dei master nodes.  
+4. Supporto al cliente nelle prime settimane dall'installazione.  
 
 La documentazione è composta da tre documenti:  
 - il primo "PREREQUISITI" dove sono elencati i prerequisiti e le configurazioni necessarie,  
