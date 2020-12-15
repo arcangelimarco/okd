@@ -250,4 +250,4 @@ GATEWAY=XXX.XXX.XXX.XXX
 Dopo questa operazione su ogni master node, si possono riavviare uno alla volta.  
 
 ### Nota Bene
-Oltre a staticizzare gli IP dei master è necessario richiedere la reservation per gli tutti gli IP allocati. In questo modo si evita che l'IP possa essere riassegnato dal DHCP.  
+Oltre a staticizzare gli IP dei master è necessario configurare la reservation per gli tutti gli IP allocati. In questo modo si evita che l'IP possa essere riassegnato dal DHCP.  
