@@ -18,4 +18,4 @@ La documentazione è composta da tre documenti:
 - il secondo "INSTALLAZIONE" dove sono elencati i passi per installare il cluster OKD,  
 - il terzo "POST_INSTALLAZIONE" dove sono elencati i passi post installazione.  
 
-Tutti i file descritti sono stati aggiunti in questo repository.  
+Tutti i manifest yaml e i file di testo descritti sono stati aggiunti a questo repository.  
