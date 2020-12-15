@@ -4,7 +4,7 @@
 1. Definizione degli infrastructure nodes.  
 2. Logging centralizzato con Elasticsearch e Kibana.  
 3. Authentication integration con Active Directory / LDAP.  
-4. Configurazine statica degli IP dei master nodes.  
+4. Configurazione statica degli IP dei master nodes.  
 
 
 ## Definizione degli infrastructure nodes  
@@ -29,9 +29,9 @@ oc get nodes -o wide
 ```
 
 ## Logging centralizzato con Elasticsearch e Kibana
-Il logging non viene configurato di default pertanto si necessita di installare l'operator.
+Il logging non viene configurato di default pertanto si necessita l'installazione dell'operator.  
 Lo stack è composto da Elasticsearch, Kibana e Fluent bit.  
-ElasticSearch richiede un persistent volume per registrare i dati, è necessario richiedere un persistent Volume Claim.  
+Elasticsearch richiede un persistent volume per registrare i dati, è necessario richiedere un persistent Volume Claim.  
 In questo caso di una presenza di un solo datastore non è necessario fare nessuna configurazione aggiuntiva.  
 Documentazione dell'operator Elasticsearch al relativo Quickstart:  
 https://www.elastic.co/guide/en/cloud-on-k8s/1.2/k8s-deploy-eck.html  
@@ -41,11 +41,10 @@ https://www.elastic.co/guide/en/cloud-on-k8s/1.2/k8s-deploy-eck.html
 oc create namespace okd-logging
 ```
 
-Estrapolare l'URL della console e copiarla nel file host del PC locale indicando come IP quello dell'ingress:
+Estrapolare l'URL della console:  
 
 ```
 oc whoami --show-console
-echo "<ingress-IP> <URL-console>" >> /etc/hosts
 ```
 
 Dalla console:
@@ -131,7 +130,6 @@ oc create -f fluent-bit-ds.yaml
 ```
 
 Accedere a kibana usando l'indirizzo elasticsearch-service-http configurato precedentemente nel daemon set.  
-Ricordarsi di inserire tale indirizzo nel file hosts del PC locale.  
 L'utente è "elastic" e la password è la stessa che è stata configurata precedentemente nel daemon set.  
 
 
@@ -188,7 +186,7 @@ oc create secret generic ldap-secret --from-literal=bindPassword=<password> -n o
 ```
 oc edit oauth cluster
 ```
-Aggiunta in fondo della sezione sotto riportata:  
+Aggiunta in fondo con le opportune modifiche ai campi della sezione sotto riportata:  
 ```
 spec:
   identityProviders:
@@ -218,7 +216,7 @@ Creazione di una whitelist che chiameremo WhiteListGroup.txt contente solo i gru
 ```
 CN=<Gruppo-da-abilitare>,OU=XXXXX,DC=XXXXX,DC=local
 ```
-Agli utenti associati al gruppo saranno concessi i priviligi di cluster-admin al cluster okd.  
+Agli utenti associati al gruppo saranno concessi i priviligi di cluster-admin al cluster OKD.  
 
 Sincronizzazione dei gruppi AD:  
 ```
@@ -249,7 +247,7 @@ ONBOOT=yes
 GATEWAY=XXX.XXX.XXX.XXX
 ```
 
-Dopo questa operazione su ogni master node si possono riavviare uno alla volta.  
+Dopo questa operazione su ogni master node, si possono riavviare uno alla volta.  
 
 ### Nota Bene
 Oltre a staticizzare gli IP dei master è necessario richiedere la reservation per gli tutti gli IP allocati. In questo modo si evita che l'IP possa essere riassegnato dal DHCP.  
